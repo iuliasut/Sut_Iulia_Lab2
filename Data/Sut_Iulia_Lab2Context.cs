@@ -18,6 +18,11 @@ namespace Sut_Iulia_Lab2.Data
         public DbSet<Sut_Iulia_Lab2.Models.Publisher> Publisher { get; set; } = default!;
         public DbSet<Sut_Iulia_Lab2.Models.Author> Authors { get; set; } = default!;
         public DbSet<Sut_Iulia_Lab2.Models.Category> Category { get; set; } = default!;
-       
+
+        public DbSet<BookCategory> BookCategories { get; set; }
+
+
     }
+
+
 }

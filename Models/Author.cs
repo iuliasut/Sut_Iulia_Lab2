@@ -12,13 +12,20 @@ namespace Sut_Iulia_Lab2.Models
 
         [Required]
         [StringLength(100)]
-        public string? LastName { get; set; }  
+        public string? LastName { get; set; }
 
-        public List<Book> Books { get; set; } = new List<Book>();
+        [Display(Name = "Full Name")]
         public string FullName
         {
-            get { return $"{FirstName} {LastName}"; }
+            get
+            {
+                return FirstName + " " + LastName;
+            }
         }
+
+        public List<Book> Books { get; set; } = new List<Book>();
+
+       
     
 
 }

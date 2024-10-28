@@ -34,7 +34,7 @@ namespace Sut_Iulia_Lab2.Pages.Books
         [BindProperty]
         public Book Book { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
+       
         public async Task<IActionResult> OnPostAsync(string[] selectedCategories)
         {
             var newBook = new Book();

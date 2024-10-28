@@ -19,11 +19,28 @@ namespace Sut_Iulia_Lab2.Pages.Categories
             _context = context;
         }
 
-        public IList<Category> Category { get;set; } = default!;
+        public IList<Category> Category { get; set; } = default!;
 
-        public async Task OnGetAsync()
+       
+        public IList<Book> Books { get; set; } = new List<Book>();
+        public int? SelectedCategoryId { get; set; }
+
+        public async Task OnGetAsync(int? categoryId)
         {
+            
             Category = await _context.Category.ToListAsync();
+
+            if (categoryId != null)
+            {
+                SelectedCategoryId = categoryId;
+
+                Books = await _context.BookCategories
+                    .Where(bc => bc.CategoryID == categoryId)
+                    .Include(bc => bc.Book)
+                        .ThenInclude(b => b.Author)
+                    .Select(bc => bc.Book)
+                    .ToListAsync();
+            }
         }
     }
 }
