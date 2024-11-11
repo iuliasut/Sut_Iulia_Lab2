@@ -1,30 +1,36 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Sut_Iulia_Lab2.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<Sut_Iulia_Lab2Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Sut_Iulia_Lab2Context") ?? throw new InvalidOperationException("Connection string 'Sut_Iulia_Lab2Context' not found.")));
 
-var app = builder.Build();
+builder.Services.AddDbContext<LibraryIdentityContext>(options => 
+options.UseSqlServer(builder.Configuration.GetConnectionString("Sut_Iulia_Lab2Context") ?? throw new InvalidOperationException("Connectionstring 'Sut_Iulia_Lab2Context' not found.")));
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;   
+    }).AddEntityFrameworkStores<LibraryIdentityContext>();
 
-// Configure the HTTP request pipeline.
+var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapRazorPages();
-
 app.Run();

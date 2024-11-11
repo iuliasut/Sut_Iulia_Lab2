@@ -20,6 +20,8 @@ namespace Sut_Iulia_Lab2.Data
         public DbSet<Sut_Iulia_Lab2.Models.Category> Category { get; set; } = default!;
 
         public DbSet<BookCategory> BookCategories { get; set; }
+        public DbSet<Sut_Iulia_Lab2.Models.Member> Member { get; set; } = default!;
+        public DbSet<Sut_Iulia_Lab2.Models.Borrowing> Borrowing { get; set; } = default!;
 
 
     }
